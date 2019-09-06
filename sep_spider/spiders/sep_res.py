@@ -5,7 +5,7 @@ from scrapy.http import Request
 from scrapy import Selector
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException
-from sep_spider.settings import FILES_STORE, GEOKO_PATH
+from sep_spider.settings import FILES_STORE, GEOKO_PATH, IGNORE_LIST
 from sep_spider.account_info import SEP_PASSWD, SEP_USER, YDM_INFO
 from sep_spider.items import SepItemLoader, SepItem
 from sep_spider.utils.yundama_demo import YDMHttp
@@ -62,7 +62,6 @@ class SepSpider(scrapy.Spider):
         file_path = [response.meta.get('course_name')]
         print('course: ', file_path[0])
         for each in response.css('#showForm>table>tbody>tr>.specialLink>a:nth-of-type(2)'):
-            
             depth = 1
             if each.css('::attr(title)').extract_first('') == '文件夹':
                 dir_name = each.css('span:nth-of-type(1)::text').extract_first('')
@@ -79,6 +78,10 @@ class SepSpider(scrapy.Spider):
                     file_path.pop()
 
                 if not os.path.exists(os.path.join(FILES_STORE, *tuple(file_path), file_name)):
+                    if file_name in IGNORE_LIST:
+                        print('ignore: ', file_name)
+                        continue
+
                     print(os.path.join(FILES_STORE, *tuple(file_path), file_name))
                     loader = SepItemLoader(item=SepItem(), response=response)
                     loader.add_value('url', response.url)

@@ -92,5 +92,7 @@ ITEM_PIPELINES = {
 #HTTPCACHE_IGNORE_HTTP_CODES = []
 #HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
-
+IGNORE_LIST = [
+    '01C语言程序的运行时结构.wmv'
+]
 
