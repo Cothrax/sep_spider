@@ -16,7 +16,13 @@ NEWSPIDER_MODULE = 'sep_spider.spiders'
 FILES_URLS_FIELD = 'file_url'
 
 GEOKO_PATH = "sep_spider/geckodriver-v0.24.0-linux64/geckodriver"
-FILES_STORE = 'sep/'
+try:
+    from .custom_settings import CUSTOM_FILES_STORE
+    FILES_STORE = CUSTOM_FILES_STORE
+except:
+    FILES_STORE = 'sep/'
+
+DOWNLOAD_TIMEOUT = 300
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'sep_spider (+http://www.yourdomain.com)'

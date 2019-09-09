@@ -6,7 +6,7 @@ from scrapy import Selector
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException
 from sep_spider.settings import FILES_STORE, GEOKO_PATH, IGNORE_LIST
-from sep_spider.account_info import SEP_PASSWD, SEP_USER, YDM_INFO
+from sep_spider.custom_settings import SEP_PASSWD, SEP_USER, YDM_INFO
 from sep_spider.items import SepItemLoader, SepItem
 from sep_spider.utils.yundama_demo import YDMHttp
 from urllib.parse import unquote
