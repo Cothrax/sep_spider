@@ -18,12 +18,16 @@ import re
 PENDING_TIME = 3
 
 
-def checker(foo1, foo2=None):
+def checker(foo1, foo2=None, timeout=180):
+    wait_time = 0
     while True:
+        if wait_time >= timeout:
+            return None
         try:
             return foo1()
         except NoSuchElementException:
             time.sleep(PENDING_TIME)
+            wait_time += PENDING_TIME
         except ElementNotInteractableException:
             foo2()
         except Exception as e:
