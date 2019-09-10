@@ -6,11 +6,12 @@
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from scrapy.pipelines.files import FilesPipeline
-from sep_spider.settings import FILES_STORE
+from sep_spider.settings import FILES_STORE, CONVERT_FORMAT_LIST
 import MySQLdb
 import MySQLdb.cursors
 from twisted.enterprise import adbapi
 import os
+import re
 
 
 class SepFilesPipeline(FilesPipeline):
@@ -20,12 +21,18 @@ class SepFilesPipeline(FilesPipeline):
                 print("Error get: " + item['url'])
                 continue
 
+            # move file
             new_path = os.path.join(FILES_STORE, item['file_path'])
             if not os.path.exists(new_path):
                 os.popen('mkdir -p "%s"' % new_path)
             old_path = os.path.join(FILES_STORE, value['path'])
             new_path = os.path.join(new_path, item['name'])
             os.popen('mv "%s" "%s"' % (old_path, new_path))
+
+            # convert office to pdf
+            # re_groups = re.match(r"^(.*)\.(.*)$", new_path).groups()
+            # if len(re_groups) > 1 and re_groups[1] in CONVERT_FORMAT_LIST:
+            #     os.popen('unoconv -f pdf "%s"' % new_path)
 
 
 class MysqlTwistedPipline(object):

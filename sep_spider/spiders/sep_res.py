@@ -18,16 +18,16 @@ import re
 PENDING_TIME = 3
 
 
-def checker(foo1, foo2=None, timeout=180):
-    wait_time = 0
+def checker(foo1, foo2=None, max_retry=20):
+    retry = 0
     while True:
-        if wait_time >= timeout:
+        if retry > max_retry:
             return None
         try:
             return foo1()
         except NoSuchElementException:
             time.sleep(PENDING_TIME)
-            wait_time += PENDING_TIME
+            retry += 1
         except ElementNotInteractableException:
             foo2()
         except Exception as e:
@@ -159,6 +159,10 @@ class SepSpider(scrapy.Spider):
             yield Request(url=each, cookies=self.browser.get_cookies(), dont_filter=True)
 
     def __del__(self):
-        for cnt, name in enumerate(self.downloaded, 1):
-            print(cnt, ": ", name)
+        with open(os.path.join(FILES_STORE, 'update_log.txt'), 'w') as f:
+            for cnt, name in enumerate(self.downloaded, 1):
+                line = "%s: %s\n" % (cnt, name)
+                f.write(line)
+                print(line, end='')
+
         self.browser.quit()

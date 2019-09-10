@@ -102,3 +102,4 @@ IGNORE_LIST = [
     '01C语言程序的运行时结构.wmv'
 ]
 
+CONVERT_FORMAT_LIST = ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx']
