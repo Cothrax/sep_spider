@@ -6,7 +6,7 @@ from scrapy import Selector
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException
 from sep_spider.settings import FILES_STORE, GEOKO_PATH, IGNORE_LIST
-from sep_spider.custom_settings import SEP_PASSWD, SEP_USER, YDM_INFO
+from sep_spider.custom_settings import SEP_PASSWD, SEP_USER, YDM_INFO, LOG_PATH
 from sep_spider.items import SepItemLoader, SepItem
 from sep_spider.utils.yundama_demo import YDMHttp
 from urllib.parse import unquote
@@ -159,7 +159,7 @@ class SepSpider(scrapy.Spider):
             yield Request(url=each, cookies=self.browser.get_cookies(), dont_filter=True)
 
     def __del__(self):
-        with open(os.path.join(FILES_STORE, 'update_log.txt'), 'w') as f:
+        with open(LOG_PATH, 'w') as f:
             for cnt, name in enumerate(self.downloaded, 1):
                 line = "%s: %s\n" % (cnt, name)
                 f.write(line)
