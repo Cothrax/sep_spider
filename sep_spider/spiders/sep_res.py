@@ -165,10 +165,10 @@ class SepSpider(scrapy.Spider):
             yield Request(url=each, cookies=self.browser.get_cookies(), dont_filter=True)
 
     def __del__(self):
-        with open(LOG_PATH, 'w') as f:
-            for cnt, name in enumerate(self.downloaded, 1):
-                line = "%s: %s\n" % (cnt, name)
-                f.write(line)
-                print(line, end='')
+        # with open(LOG_PATH, 'w') as f:
+        #     for cnt, name in enumerate(self.downloaded, 1):
+        #         line = "%s: %s\n" % (cnt, name)
+        #         f.write(line)
+        #         print(line, end='')
 
         self.browser.quit()
