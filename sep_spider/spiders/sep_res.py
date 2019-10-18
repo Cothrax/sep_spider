@@ -56,17 +56,27 @@ class SepSpider(scrapy.Spider):
         super(SepSpider, self).__init__(name, **kwargs)
 
     def parse(self, response):
-        # import pdb; pdb.set_trace()
         name = response.css('.Mrphs-hierarchy--siteName > a:nth-child(1)::text').extract_first('')
         print(response.url, name)
         res_url = response.css('a[title="资源 - 上传、下载课件，发布文档，网址等信息"]::attr(href)').extract_first('')
         yield Request(res_url, callback=self.parse_course, meta={'page_type': 'res', 'course_name': name})
 
     def parse_course(self, response):
+        # if response.meta.get('course_name') == '大学英语IV19-20秋季':
+        #     pass
+        # else:
+        #     return
+
         file_path = [response.meta.get('course_name')]
         print('course: ', file_path[0])
         for each in response.css('#showForm>table>tbody>tr>.specialLink>a:nth-of-type(2)'):
-            depth = 1
+            print(file_path)
+
+            re_obj = re.match('.*([0-9])em', each.xpath('../@style').extract_first(''))
+            depth = int(re_obj.group(1)) if len(re_obj.groups()) > 0 else 1
+            while depth < len(file_path):
+                file_path.pop()
+
             if each.css('::attr(title)').extract_first('') == '文件夹':
                 dir_name = each.css('span:nth-of-type(1)::text').extract_first('')
                 print('folder: ', dir_name)
@@ -75,11 +85,6 @@ class SepSpider(scrapy.Spider):
                 file_url = each.css('::attr(href)').extract_first('')
                 file_name = unquote(re.match('.*/(.*)$', file_url).group(1))
                 print('file: ', file_name)
-
-                re_obj = re.match('.*([0-9])em', each.xpath('../@style').extract_first(''))
-                depth = int(re_obj.group(1)) if len(re_obj.groups()) > 0 else 1
-                while depth < len(file_path):
-                    file_path.pop()
 
                 if not os.path.exists(os.path.join(FILES_STORE, *tuple(file_path), file_name)):
                     if file_name in IGNORE_LIST:
@@ -97,6 +102,7 @@ class SepSpider(scrapy.Spider):
                     self.downloaded.append(os.path.join(file_path_str, file_name))
                     item = loader.load_item()
                     yield item
+        pass
 
     def start_requests(self):
         return self.sep_login()
