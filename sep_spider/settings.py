@@ -103,3 +103,6 @@ IGNORE_LIST = [
 ]
 
 CONVERT_FORMAT_LIST = ['doc', 'docx', 'ppt', 'pptx', 'xls', 'xlsx']
+
+AUTOTHROTTLE_ENABLED = True
+DOWNLOAD_DELAY = 1
