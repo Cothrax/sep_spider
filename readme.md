@@ -9,8 +9,8 @@ SepSpider is a spider based on scrapy and selenium for automatically crawling an
 3. Firefox
 
 ## Usage
-1. set up account info at `sep_spider/custom_setting.py`
-Yundama account is needed for QR Code recognition. Create an account at http://www.yundama.com/ and add a little credits to it. 5 RMB is enough for a year's use.
+1. Set up account info at `sep_spider/custom_setting.py`.
+
 ```python custom_setting.py
 # sep user info
 SEP_USER = 'your sep account (email)'
@@ -36,22 +36,24 @@ CUSTOM_FILES_STORE = 'sep/'
 RELOAD_PATH = './reload'
 ```
 
+Yundama account is needed for QR Code recognition. Create an **User (NOT Developer)** account at http://www.yundama.com/ and add a little credits to it. 5 RMB is enough for a year's use.
+
 2. run spider
 ```bash
 cd sep_spider
 scrapy crawl sep_spider
 ```
-The default location to store files is './sep'. It can be customized in `sep_spider/custom_setting.py`.
+The default location to store files is `./sep`. It can be customized in `sep_spider/custom_setting.py`.
 
 ### Listener usage
 For server deployment, you can run `listener.py` to listen to the changes of `reload` file as the signal of recrawling. Recrawling will only download non-existing files. **It won't modify existing files**.
 
-1. set up your environment and account info (see above)
-2. run `listener.py`
+1. Set up your environment and account info (see above)
+2. Run `listener.py`
 ```bash
 python listener.py
 ```
-3. everytime you modify the `reload` file, the spider will recrawl the resources. The location of reload file is customizable in `sep_spider/custom_setting.py`.
+3. Everytime you modify the `reload` file, the spider will recrawl the resources. The location of reload file is customizable in `sep_spider/custom_setting.py`.
 ```bash
 touch reload
 ```
