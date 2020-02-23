@@ -1,4 +1,4 @@
-# SepSpider: Spider for [UCAS SEP platform](sep.ucas.ac.cn/)
+# SepSpider: Spider for [UCAS SEP platform](http://sep.ucas.ac.cn/)
 SepSpider is a spider based on scrapy and selenium for automatically crawling and updating UCAS class resources. It's also suitable for server deployment. 
 ## Requirements
 1. Linux (Ubuntu recommended)
