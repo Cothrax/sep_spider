@@ -2,7 +2,7 @@
 SEP_USER = 'your sep account (email)'
 SEP_PASSWD = 'your password'
 
-# The spider use Yundama for QR Code recognition.
+# The spider use Yundama for Captcha recognition.
 # If you don't have one, create an User account (NOT a Developer one) at:
 # http://www.yundama.com/
 # and add some credits to it.

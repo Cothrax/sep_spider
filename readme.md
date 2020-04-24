@@ -16,7 +16,7 @@ SepSpider is a spider based on scrapy and selenium for automatically crawling an
 SEP_USER = 'your sep account (email)'
 SEP_PASSWD = 'your password'
 
-# The spider use Yundama for QR Code recognition.
+# The spider use Yundama for Captcha recognition.
 # If you don't have one, create an User account (NOT a Developer one) at:
 # http://www.yundama.com/
 # and add some credits to it.
@@ -36,7 +36,7 @@ CUSTOM_FILES_STORE = 'sep/'
 RELOAD_PATH = './reload'
 ```
 
-Yundama account is needed for QR Code recognition. Create an **User (NOT Developer)** account at http://www.yundama.com/ and add a little credits to it. 5 RMB is enough for a year's use.
+Yundama account is needed for Captcha recognition. Create an **User (NOT Developer)** account at http://www.yundama.com/ and add a little credits to it. 5 RMB is enough for a year's use.
 
 2. run spider
 ```bash
