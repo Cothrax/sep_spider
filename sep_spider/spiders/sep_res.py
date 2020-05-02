@@ -83,6 +83,10 @@ class SepSpider(scrapy.Spider):
                 file_path.append(dir_name)
             else:
                 file_url = each.css('::attr(href)').extract_first('')
+                # process copyright alert
+                if file_url == '#':
+                    continue
+                
                 file_name = unquote(re.match('.*/(.*)$', file_url).group(1))
                 print('file: ', file_name)
 
